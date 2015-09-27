@@ -4,22 +4,32 @@
 // };
 
 // But instead we're going to implement it from scratch:
-var results = [];
 var getElementsByClassName = function(className, node){
+  //use document.body
+  //use element.childNodes
+  //use element.classList
+ 
   //create results array
+  var results = [];
+  node = node || document.body;
+
+  for (var i = 0; i < node.classList.length; i++) {
+    if(node.classList[i] === className) {
+      results.push(node);
+    }
+  };
+    
+  var children = [];
+    
+  for (var i = 0; i < node.childNodes.length; i++) {
   
-  var node = node || document.body;
-
-  if(node.className === className) {
-    results.push(node);
+     if (node.childNodes[i].nodeType === Node.ELEMENT_NODE) {
+      children.push(node.childNodes[i]);
+     }  
   }
 
-  // console.log(node.childNodes);
-  if(node.hasChildNoes) {
-     for(var i = 0; i < node.childNodes.length; i++) {
-      getElementsByClassName(className, node.childNodes[i]);
-  }
-
+  for (var i = 0; i < children.length; i++) {
+    var results = results.concat(getElementsByClassName(className, children[i]));
   }
   
   //loop through all nodes of document.body
@@ -27,7 +37,7 @@ var getElementsByClassName = function(className, node){
     //add node to a result array
   //find all the childnodes of current node
     //invoke getElements again on each child node
-  //if there are no more nodes, move on to next parent node
+      //if child node is text element, don't invoke getElements
 
    //return results array
    return results;
